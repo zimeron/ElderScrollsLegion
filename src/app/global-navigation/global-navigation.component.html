@@ -1,0 +1,28 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list float="left">
+      <a mat-list-item href="/newFeature">Create New Feature</a>
+      <a mat-list-irem href="/newClass">Create New Class</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Elder Scrolls Legion</span>
+    </mat-toolbar>
+    <h3>
+      A character builder for <a href="https://uestrpg.wixsite.com/home/getting-started">UESTRPG by Michael Bonar</a>
+    </h3>
+  </mat-sidenav-content>
+</mat-sidenav-container>

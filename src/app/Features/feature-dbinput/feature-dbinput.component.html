@@ -1,0 +1,26 @@
+<h2>Create New Race, Class, Birthsign or Background Feature</h2>
+    <form [formGroup]="featureForm" (ngSubmit)="postFeature()" class="formContainer">
+        <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="20" 
+            placeholder="Description" 
+            cdkTextAreaAutosize
+            formControlName="description"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Origin" formControlName="origin">
+                <mat-option value="race">Race</mat-option>
+                <mat-option value="class">Class</mat-option>
+                <mat-option value="background">Background</mat-option>
+                <mat-option value="birthsign">Birthsign</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button type="submit" [disabled]="!featureForm.valid">Submit</button>
+    </form>
+    
