@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, ErrorObserver, throwError, of } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { MessageService } from '../message.service';
+import { Feature } from '../Features/Feature';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,15 @@ export class FeatureService {
     this.messageService.add(`Feature Service: ${message}`);
   }
 
-  // GETS a JSON object from the server.
-  getFeatures() {
+  // GETS all features currently in DB from the server.
+  getAllFeatures(): Observable<Feature[]> {
+    this.log('Grabbing all Features, please wait');
+    return this.httpClient.get<Feature[]>(this.featuresURL, this.httpOptions)
+      .pipe(
+        tap(() => this.log('features retrieved')),
+        catchError(this.handleError<Feature[]>('getAllFeatures', []))
+        );
   }
-
   // Takes a JSON object from Component and POSTs it to the server.
   postFeature(feature): Observable<string> {
     const featureString = JSON.stringify(feature);

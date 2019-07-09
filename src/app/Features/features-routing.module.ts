@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeatureDBInputComponent } from './feature-dbinput/feature-dbinput.component';
-import { FeatureService } from './feature-service.service';
 import { Routes, RouterModule } from '@angular/router';
+import { FeatureListDisplayComponent } from './feature-list-display/feature-list-display.component';
 
 const routes: Routes = [
-  { path: 'newFeature', component: FeatureDBInputComponent }
+  { path: 'newFeature', component: FeatureDBInputComponent },
+  { path: 'showAllFeatures', component: FeatureListDisplayComponent}
 ];
 
 @NgModule({

@@ -4,9 +4,10 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list float="left">
+    <mat-nav-list>
       <a mat-list-item href="/newFeature">Create New Feature</a>
-      <a mat-list-irem href="/newClass">Create New Class</a>
+      <!--a mat-list-item href="/newClass">Create New Class-->
+      <a mat-list-item href="/showAllFeatures">Feature List</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
