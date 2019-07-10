@@ -4,7 +4,7 @@ import { FeatureDBInputComponent } from './feature-dbinput/feature-dbinput.compo
 import { FeatureService } from './feature-service.service';
 import { FeaturesRoutingModule } from './features-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatListModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatListModule, MatButtonModule } from '@angular/material';
 import { FeatureListDisplayComponent } from './feature-list-display/feature-list-display.component';
 
 @NgModule({
@@ -16,7 +16,8 @@ import { FeatureListDisplayComponent } from './feature-list-display/feature-list
     MatInputModule,
     MatSelectModule,
     MatOptionModule,
-    MatListModule
+    MatListModule,
+    MatButtonModule
   ],
   providers: [
     FeatureService

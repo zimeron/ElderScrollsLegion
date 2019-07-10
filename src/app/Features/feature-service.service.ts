@@ -27,9 +27,9 @@ export class FeatureService {
     this.log('Grabbing all Features, please wait');
     return this.httpClient.get<Feature[]>(this.featuresURL, this.httpOptions)
       .pipe(
-        tap(() => this.log('features retrieved')),
+        tap(() => this.log('features retrieved'),
         catchError(this.handleError<Feature[]>('getAllFeatures', []))
-        );
+        ));
   }
   // Takes a JSON object from Component and POSTs it to the server.
   postFeature(feature): Observable<string> {
@@ -37,7 +37,7 @@ export class FeatureService {
     this.log('Submitting New Feature, Please wait');
     return this.httpClient.post<string>(this.featuresURL, featureString, this.httpOptions)
       .pipe(
-        tap((newFeature: string) => this.log('added new feature')),
+        tap(() => this.log('added new feature')),
         catchError(this.handleError<string>('postFeature'))
       );
   }

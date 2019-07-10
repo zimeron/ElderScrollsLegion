@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FeatureService } from '../feature-service.service';
 import { Feature } from '../Feature';
+import { MatList } from '@angular/material';
+import { MessageService } from '../../message.service';
 
 @Component({
   selector: 'app-feature-list-display',
@@ -15,15 +17,24 @@ import { Feature } from '../Feature';
 export class FeatureListDisplayComponent implements OnInit {
 
 features: Feature[];
+featureSelected: boolean;
 
-constructor(private featureService: FeatureService) { }
+// Handler for clicking on a feature in the list.
+// TODO: Have it pop up a more detailed view of the selected feature
+showFeature(): void {
+  this.featureSelected = true;
+}
+
+constructor(private featureService: FeatureService, private messageService: MessageService) { }
 
 ngOnInit() {
-  // TODO: Format the JSON from this into Feature properly, it's currently formatted in terms of Rails DB handling
   // Calls FeatureService to get all features currently in database.
     this.featureService.getAllFeatures()
-      .subscribe(features => this.features = features);
-    console.log(this.features);
-  }
-
+      .subscribe(
+        features => {
+          this.features = features;
+          console.log(this.features);
+          this.messageService.clear();
+        });
+      }
 }
