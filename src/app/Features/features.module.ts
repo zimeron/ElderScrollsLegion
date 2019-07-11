@@ -6,6 +6,7 @@ import { FeaturesRoutingModule } from './features-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatListModule, MatButtonModule } from '@angular/material';
 import { FeatureListDisplayComponent } from './feature-list-display/feature-list-display.component';
+import { FeatureDetailDisplayComponent } from './feature-detail-display/feature-detail-display.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { FeatureListDisplayComponent } from './feature-list-display/feature-list
   ],
   declarations:[
     FeatureDBInputComponent,
-    FeatureListDisplayComponent
+    FeatureListDisplayComponent,
+    FeatureDetailDisplayComponent
   ],
   exports: [
     FeatureDBInputComponent

@@ -17,13 +17,6 @@ import { MessageService } from '../../message.service';
 export class FeatureListDisplayComponent implements OnInit {
 
 features: Feature[];
-featureSelected: boolean;
-
-// Handler for clicking on a feature in the list.
-// TODO: Have it pop up a more detailed view of the selected feature
-showFeature(): void {
-  this.featureSelected = true;
-}
 
 constructor(private featureService: FeatureService, private messageService: MessageService) { }
 

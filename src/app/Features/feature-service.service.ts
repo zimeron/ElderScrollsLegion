@@ -31,6 +31,17 @@ export class FeatureService {
         catchError(this.handleError<Feature[]>('getAllFeatures', []))
         ));
   }
+
+  getFeatureById(id: number): Observable<Feature>{
+    this.log('Retrieving Specified Feature, please wait');
+    return this.httpClient.get<Feature>(this.featuresURL + '/' + id, this.httpOptions)
+      .pipe(
+        tap(() => this.log('feature retrieved'),
+        catchError(this.handleError<Feature>('getFeatureById'))
+        ));
+  }
+
+
   // Takes a JSON object from Component and POSTs it to the server.
   postFeature(feature): Observable<string> {
     const featureString = JSON.stringify(feature);

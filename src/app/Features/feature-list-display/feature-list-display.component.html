@@ -3,8 +3,7 @@
 <div *ngIf="features" class="center">
     <mat-action-list>
         <mat-list-item *ngFor="let feature of features" class="center">
-                <button mat-list-item (click)="showFeature()">{{feature.name}}</button>
+                <button mat-list-item routerLink="/detail/{{feature.id}}">{{feature.name}}</button>
         </mat-list-item>
     </mat-action-list>
 </div>
-<!--- TODO: make a new div here that appears with more info once a feature is selected.-->
