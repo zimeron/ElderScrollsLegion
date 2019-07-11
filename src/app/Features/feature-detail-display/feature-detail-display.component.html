@@ -1,13 +1,14 @@
-<div class="center">
-    <mat-list>
-        <mat-list-item>
-            Name: {{feature.name}}
-        </mat-list-item>
-        <mat-list-item>
-            Description: {{feature.description}}
-        </mat-list-item>
-        <mat-list-item>
+<h2>Feature Details</h2>
+<div *ngIf="listControl" class="details_container">
+    <mat-card>
+        <mat-card-title>
+            {{feature.name}}
+        </mat-card-title>
+        <mat-card-subtitle>
             Origin: {{feature.origin}}
-        </mat-list-item>
-    </mat-list>
+        </mat-card-subtitle>
+        <mat-card-content>
+            {{feature.description}}
+        </mat-card-content>
+    </mat-card>
 </div>

@@ -1,7 +1,6 @@
-.center {
-    display: flex;
-    flex-direction: column;
-    margin-left: 35%;
-    margin-right: auto;
+.details_container {
     width: 40%;
+    margin-left: 30%;
 }
+
+

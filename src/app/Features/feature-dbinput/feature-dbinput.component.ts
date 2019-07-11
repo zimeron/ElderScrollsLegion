@@ -37,9 +37,10 @@ export class FeatureDBInputComponent implements OnInit {
     feature.description = this.featureForm.value.description;
     feature.origin = this.featureForm.value.origin;
     console.warn(this.featureForm.value);
-    this.featureService
-      .postFeature(feature)
-      .subscribe();
+    this.featureService.postFeature(feature)
+      .subscribe(
+        () => this.featureForm.reset()
+      );
   }
   ngOnInit() {}
 }

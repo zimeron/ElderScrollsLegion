@@ -1,3 +1,6 @@
+/*
+    Describes a player Character from UESTRPG, in simple terms. Not yet JOINed with any other data.
+*/
 export class character{
     name: string;
     stats: number[];

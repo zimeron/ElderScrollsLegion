@@ -9,7 +9,8 @@ import { Feature } from '../Features/Feature';
   providedIn: 'root'
 })
 export class FeatureService {
-  // HTTP connection information.
+  // HTTP connection information for Ruby on Rails (Puma) server at AWS Lightsail.
+  // Specifies that this client expects JSON only, not HTML or XML.
   featuresURL = 'http://3.86.168.197:3000/features';
   httpOptions = {
     headers: new HttpHeaders({
@@ -22,7 +23,7 @@ export class FeatureService {
     this.messageService.add(`Feature Service: ${message}`);
   }
 
-  // GETS all features currently in DB from the server.
+  // GETS all features currently in DB from the server for FeatureListDisplay
   getAllFeatures(): Observable<Feature[]> {
     this.log('Grabbing all Features, please wait');
     return this.httpClient.get<Feature[]>(this.featuresURL, this.httpOptions)
@@ -32,6 +33,7 @@ export class FeatureService {
         ));
   }
 
+  // GETs Selected Feature by passing ID from FeatureDetailDisplay to server.
   getFeatureById(id: number): Observable<Feature>{
     this.log('Retrieving Specified Feature, please wait');
     return this.httpClient.get<Feature>(this.featuresURL + '/' + id, this.httpOptions)
@@ -42,7 +44,7 @@ export class FeatureService {
   }
 
 
-  // Takes a JSON object from Component and POSTs it to the server.
+  // Takes a JSON object from FeatureDBInput and POSTs it to the server.
   postFeature(feature): Observable<string> {
     const featureString = JSON.stringify(feature);
     this.log('Submitting New Feature, Please wait');

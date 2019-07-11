@@ -4,7 +4,14 @@ import { FeatureDBInputComponent } from './feature-dbinput/feature-dbinput.compo
 import { FeatureService } from './feature-service.service';
 import { FeaturesRoutingModule } from './features-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule, MatSelectModule, MatOptionModule, MatListModule, MatButtonModule } from '@angular/material';
+import {
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatOptionModule,
+  MatListModule,
+  MatButtonModule,
+  MatCardModule } from '@angular/material';
 import { FeatureListDisplayComponent } from './feature-list-display/feature-list-display.component';
 import { FeatureDetailDisplayComponent } from './feature-detail-display/feature-detail-display.component';
 
@@ -18,12 +25,13 @@ import { FeatureDetailDisplayComponent } from './feature-detail-display/feature-
     MatSelectModule,
     MatOptionModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [
     FeatureService
   ],
-  declarations:[
+  declarations: [
     FeatureDBInputComponent,
     FeatureListDisplayComponent,
     FeatureDetailDisplayComponent

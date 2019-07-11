@@ -10,8 +10,11 @@ import { MessageService } from '../../message.service';
   styleUrls: ['./feature-list-display.component.css']
 })
 
-/* Handles display of all Features currently in database,
+/*
+   Handles display of all Features currently in database,
    through use of the GET feature of FeaturesService.
+
+   Allows click through list to more detailed readout of selected Feature (FeatureDetailDisplay)
 */
 
 export class FeatureListDisplayComponent implements OnInit {

@@ -2,7 +2,7 @@
 <!--TODO: some kind of sort for this list -->
 <div *ngIf="features" class="center">
     <mat-action-list>
-        <mat-list-item *ngFor="let feature of features" class="center">
+        <mat-list-item *ngFor="let feature of features">
                 <button mat-list-item routerLink="/detail/{{feature.id}}">{{feature.name}}</button>
         </mat-list-item>
     </mat-action-list>

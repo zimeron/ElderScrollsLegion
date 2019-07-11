@@ -10,6 +10,14 @@ import { MessageService } from '../../message.service';
   templateUrl: './feature-detail-display.component.html',
   styleUrls: ['./feature-detail-display.component.css']
 })
+
+/*
+Describes a detailed display for a chosen Feature, showing Name, Description, and
+Origin (Race, Class, Birthsign, or Background).
+
+Is instantiated by the router after selection from the list in FeatureListDisplay.
+*/
+
 export class FeatureDetailDisplayComponent implements OnInit {
 
   constructor(
@@ -20,11 +28,14 @@ export class FeatureDetailDisplayComponent implements OnInit {
   ) { }
 
   feature: Feature;
+  listControl = false;
 
   ngOnInit() {
     this.getFeature();
   }
 
+  // Makes call to DB through FeatureService using ID contained in route,
+  // which is passed through from selected Feature on the list.
   getFeature(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.featureService.getFeatureById(id)
@@ -32,10 +43,12 @@ export class FeatureDetailDisplayComponent implements OnInit {
         this.feature = feature;
         console.log(this.feature);
         this.messageService.clear();
+        this.listControl = true;
       });
 
   }
 
+  // Allows for going back to list using browser back button.
   goBack(): void {
     this.location.back();
   }

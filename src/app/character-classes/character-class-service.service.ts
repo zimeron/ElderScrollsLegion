@@ -27,17 +27,6 @@ export class CharacterClassService {
   getClasses() {
   }
 
-  // Takes a JSON object from Component and POSTs it to the server.
-  postClass(characterClass): Observable<string> {
-    const classString = JSON.stringify(characterClass);
-    this.log('Submitting New Class, Please wait');
-    return this.httpClient.post<string>(this.classesURL, classString, this.httpOptions)
-      .pipe(
-        tap((newClass: string) => this.log('added new class')),
-        catchError(this.handleError<string>('postClass'))
-      );
-  }
-
   // Handles errors on HTTP requests
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

@@ -26,12 +26,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { GlobalNavigationComponent } from './global-navigation/global-navigation.component';
 import { MessageComponent } from './message/message.component';
 import { CharacterClassesModule } from './character-classes/character-classes.module';
+import { CharactersModule } from './characters/characters.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     GlobalNavigationComponent,
-    MessageComponent
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +52,8 @@ import { CharacterClassesModule } from './character-classes/character-classes.mo
     HttpClientModule,
     ReactiveFormsModule,
     FeaturesModule,
-    CharacterClassesModule
+    CharacterClassesModule,
+    CharactersModule
   ],
   providers: [],
   bootstrap: [AppComponent]
