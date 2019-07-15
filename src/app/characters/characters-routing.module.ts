@@ -4,7 +4,8 @@ import { CharacterGeneratorComponent } from './character-generator/character-gen
 
 // Handles routing for character module.
 const routes: Routes = [
-  { path: 'newRandChar', component: CharacterGeneratorComponent }
+  { path: 'newRandChar', component: CharacterGeneratorComponent },
+  { path: '', redirectTo: 'newRandChar', pathMatch: 'full' }
 ];
 
 
