@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CharacterGeneratorComponent } from './character-generator/character-generator.component';
 import { CharactersRoutingModule } from './characters-routing.module';
 import { CharacterService } from './character.service';
+import { MatCardModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { CharacterService } from './character.service';
   ],
   imports: [
     CommonModule,
-    CharactersRoutingModule
+    CharactersRoutingModule,
+    MatCardModule
   ],
   providers: [
     CharacterService
