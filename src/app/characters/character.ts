@@ -13,6 +13,7 @@ export class playerCharacter{
     inventory: string[];
     alignment: string;
     class: string;
+    subclass: string;
     race: string;
     birthsign: string;
     background: string;
@@ -21,4 +22,5 @@ export class playerCharacter{
     speed: number;
     personalityTraits: string[];
     size: string;
+    features: string[];
 }

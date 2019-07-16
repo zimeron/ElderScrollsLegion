@@ -30,6 +30,7 @@ export class CharacterGeneratorComponent implements OnInit {
     inventory: [],
     alignment: '',
     class: '',
+    subclass: 'N/A',
     race: '',
     birthsign: '',
     background: '',
@@ -37,7 +38,8 @@ export class CharacterGeneratorComponent implements OnInit {
     toolsandlanguages: [],
     speed: 0,
     personalityTraits: [],
-    size: ''
+    size: '',
+    features: []
   };
 
   // Flags for template
@@ -74,35 +76,83 @@ export class CharacterGeneratorComponent implements OnInit {
     // Tell template to display
     this.attributesCalced = true;
   }
+
   // Pulls a class randomly from the database (currently mocks) and relevant data and bindings
   rollClass(): void {
     // Pulls random class
     let classIndex;
     this.dice.rollArb(CHARACTERCLASSES.length)
       .subscribe(classRoll => classIndex = classRoll - 1);
-    let charClass = CHARACTERCLASSES[classIndex];
+    const charClass = CHARACTERCLASSES[classIndex];
     this.randomCharacter.name = charClass.name;
+    // Pull in default inventory
+    this.randomCharacter.inventory = charClass.inventory;
+    // Make inventory Selections
+    this.selectInventory(charClass.inventoryselections);
+    // Select Skill Proficiencies
+    this.selectSkills(charClass.numberskills, charClass.skillproficienies);
+    // Pull in features
+    this.randomCharacter.features = charClass.features;
+    // Pull in other proficiencies
+    this.randomCharacter.toolsandlanguages = charClass.toolsandlanguages;
+    // Modify attributes
+    this.modifyAttributes(charClass.abilitymodifiers);
+    // Select sub class if applicable
+    this.selectSubClass(charClass.subclasses);
+  }
+
+  // Decides randomly between pairs of possible inventory items
+  private selectInventory(inventoryselections: string[]): void {
     let i; // Element in inventoryselections
     let coinFlipResult;
-    // Decide randomly between pairs of possible inventory items
-    for (i = 0; i < charClass.inventoryselections.length; i += 2) {
+    for (i = 0; i < inventoryselections.length; i += 2) {
       this.dice.coinFlip()
         .subscribe(coinFlip => {
           coinFlipResult = coinFlip;
-          if (coinFlipResult === 0) {
-            this.randomCharacter.inventory.push(charClass.inventoryselections[i]);
+          // Choose either first element in the pair, or the next. Iterate by 2 to skip to next pair.
+          if (coinFlipResult === 1) {
+            this.randomCharacter.inventory.push(inventoryselections[i]);
           } else {
-            this.randomCharacter.inventory.push(charClass.inventoryselections[i + 1]);
+            this.randomCharacter.inventory.push(inventoryselections[i + 1]);
           }
         });
     }
-    // Randomly selects skill proficiencies from the possiblities, based on how many are available to the class
-    let j; // Iterator for numberskills
-    for (j = 0; j < charClass.numberskills; j++) {
-    }
-
   }
 
+  // Randomly selects skill proficiencies from possibilities (skillproficiencies), based on how many are available (numberskills)
+  private selectSkills(numberskills: number, skillproficiencies: string[]): void {
+    let j; // Iterator for numberskills
+    let skillRolls: number[] = []; // Rolls for skills to check they aren't the same.
+    for (j = 0; j < numberskills;) {
+      this.dice.rollArb(skillproficiencies.length)
+        .subscribe(skillRoll => {
+          // Make sure the skill being selected hasn't already been selected. If it has roll again.
+          if (skillRolls.findIndex(k => k == skillRoll) == -1) {
+            skillRolls.push(skillRoll);
+            this.randomCharacter.skillproficiencies[j] = skillproficiencies[skillRoll - 1];
+            j++;
+          }
+        });
+    }
+  }
+
+  // Modifies attributes given an ordered ability modifier array.
+  private modifyAttributes(abilitymodifiers: number[]) {
+    this.randomCharacter.strength += abilitymodifiers[0];
+    this.randomCharacter.agility += abilitymodifiers[1];
+    this.randomCharacter.endurance += abilitymodifiers[2];
+    this.randomCharacter.intelligence += abilitymodifiers[3];
+    this.randomCharacter.willpower += abilitymodifiers[4];
+    this.randomCharacter.personality += abilitymodifiers[5];
+  }
+
+  // Selects subclass from possibilities if applicable.
+  private selectSubClass(subclasses: string[]) {
+    if (subclasses.length > 0) {
+      this.dice.rollArb(subclasses.length)
+      .subscribe(roll => this.randomCharacter.subclass = subclasses[roll - 1]);
+    }
+  }
 
   ngOnInit() {
     this.rollAttributes();

@@ -33,10 +33,44 @@
             {{randomCharacter.name}}
         </mat-card-subtitle>
         <mat-card-content>
-            Inventory:
+            <h4>
+                Inventory:
+            </h4>
         </mat-card-content>
         <mat-card-content *ngFor="let inventory of randomCharacter.inventory">
             {{inventory}}
+        </mat-card-content>
+        <mat-card-content>
+            <h4>
+                Skill Proficiencies:
+            </h4>
+        </mat-card-content>
+        <mat-card-content *ngFor="let skill of randomCharacter.skillproficiencies">
+            {{skill}}
+        </mat-card-content>
+        <mat-card-content>
+            <h4>
+                Features:
+            </h4>
+        </mat-card-content>
+        <mat-card-content *ngFor="let feature of randomCharacter.features">
+            {{feature}}
+        </mat-card-content>
+        <mat-card-content>
+            <h4>
+                Tools, Weapons, Armor, and Languages:
+            </h4>
+        </mat-card-content>
+        <mat-card-content *ngFor="let tool of randomCharacter.toolsandlanguages">
+            {{tool}}
+        </mat-card-content>
+        <mat-card-content>
+            <h4>
+                Subclass:
+            </h4>
+        </mat-card-content>
+        <mat-card-content>
+            {{randomCharacter.subclass}}
         </mat-card-content>
     </mat-card>
 </div>

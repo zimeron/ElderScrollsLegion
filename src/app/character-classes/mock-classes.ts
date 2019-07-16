@@ -23,7 +23,7 @@ export const CHARACTERCLASSES: characterClass[] = [
           'Polearms',
           'Short Blade'
         ],
-      abilitymodifiers: [],
+      abilitymodifiers: [0, 0, 0, 0, 0, 0],
       subclasses: []
     },
     {
