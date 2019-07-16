@@ -1,4 +1,4 @@
-export class Feature{
+export class Feature {
     id: number;
     name: string;
     description: string;

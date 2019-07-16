@@ -1,27 +1,42 @@
-
+<h2 width="40%" margin-left="30%">New Random Character</h2>
 <div class="attributes_container" *ngIf="attributesCalced">
-    <h2>New Random Character</h2>
     <mat-card>
         <mat-card-title>
             Attributes
         </mat-card-title>
         <mat-card-content>
-            Strength: {{strength}}
+            Strength: {{randomCharacter.strength}}
         </mat-card-content>
         <mat-card-content>
-            Agility: {{agility}}
+            Agility: {{randomCharacter.agility}}
         </mat-card-content>
         <mat-card-content>
-            Endurance: {{endurance}}
+            Endurance: {{randomCharacter.endurance}}
         </mat-card-content>
         <mat-card-content>
-            Intelligence: {{intelligence}}
+            Intelligence: {{randomCharacter.intelligence}}
         </mat-card-content>
         <mat-card-content>
-            Willpower: {{willpower}}
+            Willpower: {{randomCharacter.willpower}}
         </mat-card-content>
         <mat-card-content>
-            Personality: {{personality}}
+            Personality: {{randomCharacter.personality}}
+        </mat-card-content>
+    </mat-card>
+</div>
+<div class="class_container">
+    <mat-card>
+        <mat-card-title>
+            Class
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{randomCharacter.name}}
+        </mat-card-subtitle>
+        <mat-card-content>
+            Inventory:
+        </mat-card-content>
+        <mat-card-content *ngFor="let inventory of randomCharacter.inventory">
+            {{inventory}}
         </mat-card-content>
     </mat-card>
 </div>

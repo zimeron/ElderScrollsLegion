@@ -9,7 +9,7 @@ export class characterClass {
     savingthrows: string[];
     // Holds pairs of items that must be selected between. Mutually exclusive items will be neighbors such that
     // index 0 and 1 are exclusive, 2 and 3 are exclusive, and so on.
-    inventorycselections: string[];
+    inventoryselections: string[];
     // Inventory items that don't need to be selected.
     inventory: string[];
     // Currently not hooked up to Feature system, describes only level 1 features.

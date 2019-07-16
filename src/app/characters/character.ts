@@ -1,9 +1,14 @@
 /*
     Describes a player Character from UESTRPG, in simple terms. Not yet JOINed with any other data.
 */
-export class character{
+export class playerCharacter{
     name: string;
-    stats: number[];
+    strength: number;
+    agility: number;
+    endurance: number;
+    intelligence: number;
+    willpower: number;
+    personality: number;
     resources: number[];
     inventory: string[];
     alignment: string;
@@ -14,6 +19,6 @@ export class character{
     skillproficiencies: string[];
     toolsandlanguages: string[];
     speed: number;
-    personality: string[];
+    personalityTraits: string[];
     size: string;
 }
