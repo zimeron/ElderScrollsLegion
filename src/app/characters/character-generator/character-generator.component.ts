@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DiceRollerService } from '../../dice-roller.service';
 import { CHARACTERCLASSES } from '../../character-classes/mock-classes';
+import { CHARACTERRACES } from '../../races/mock-races';
 import { characterClass } from '../../character-classes/character-class';
 import { playerCharacter } from '../character';
 import { take } from 'rxjs/operators';
@@ -45,6 +46,7 @@ export class CharacterGeneratorComponent implements OnInit {
   // Flags for template
   attributesCalced = false;
   classCalced = false;
+  raceCalced = false;
 
   constructor(private dice: DiceRollerService) { }
 
@@ -54,6 +56,7 @@ export class CharacterGeneratorComponent implements OnInit {
     let j; // Current die roll.
     const rolls: number[] = [0, 0, 0, 0]; // Stored die rolls.
     const attributes: number[] = [0, 0, 0, 0, 0, 0]; // Storage space for attribute scores
+
     for (i = 0; i < 6; i++) {
       // Roll 4d6
       for (j = 0; j < 4; j++) {
@@ -66,6 +69,7 @@ export class CharacterGeneratorComponent implements OnInit {
       // Sum up remaining rolls, store
       attributes[i] = rolls.reduce((a, b) => a + b, 0);
     }
+
     // Update attributes
     this.randomCharacter.strength = attributes[0];
     this.randomCharacter.agility = attributes[1];
@@ -73,6 +77,7 @@ export class CharacterGeneratorComponent implements OnInit {
     this.randomCharacter.intelligence = attributes[3];
     this.randomCharacter.willpower = attributes[4];
     this.randomCharacter.personality = attributes[5];
+
     // Tell template to display
     this.attributesCalced = true;
   }
@@ -84,27 +89,38 @@ export class CharacterGeneratorComponent implements OnInit {
     this.dice.rollArb(CHARACTERCLASSES.length)
       .subscribe(classRoll => classIndex = classRoll - 1);
     const charClass = CHARACTERCLASSES[classIndex];
-    this.randomCharacter.name = charClass.name;
+    this.randomCharacter.class = charClass.name;
+
     // Pull in default inventory
     this.randomCharacter.inventory = charClass.inventory;
+
     // Make inventory Selections
     this.selectInventory(charClass.inventoryselections);
+
     // Select Skill Proficiencies
-    this.selectSkills(charClass.numberskills, charClass.skillproficienies);
+    this.randomCharacter.skillproficiencies = this.selectProfs(charClass.numberskills, charClass.skillproficienies);
+
     // Pull in features
     this.randomCharacter.features = charClass.features;
+
     // Pull in other proficiencies
     this.randomCharacter.toolsandlanguages = charClass.toolsandlanguages;
+
     // Modify attributes
     this.modifyAttributes(charClass.abilitymodifiers);
+
     // Select sub class if applicable
     this.selectSubClass(charClass.subclasses);
+
+    // Tells template to display
+    this.classCalced = true;
   }
 
   // Decides randomly between pairs of possible inventory items
   private selectInventory(inventoryselections: string[]): void {
     let i; // Element in inventoryselections
     let coinFlipResult;
+
     for (i = 0; i < inventoryselections.length; i += 2) {
       this.dice.coinFlip()
         .subscribe(coinFlip => {
@@ -119,21 +135,25 @@ export class CharacterGeneratorComponent implements OnInit {
     }
   }
 
-  // Randomly selects skill proficiencies from possibilities (skillproficiencies), based on how many are available (numberskills)
-  private selectSkills(numberskills: number, skillproficiencies: string[]): void {
-    let j; // Iterator for numberskills
-    let skillRolls: number[] = []; // Rolls for skills to check they aren't the same.
-    for (j = 0; j < numberskills;) {
-      this.dice.rollArb(skillproficiencies.length)
-        .subscribe(skillRoll => {
-          // Make sure the skill being selected hasn't already been selected. If it has roll again.
-          if (skillRolls.findIndex(k => k == skillRoll) == -1) {
-            skillRolls.push(skillRoll);
-            this.randomCharacter.skillproficiencies[j] = skillproficiencies[skillRoll - 1];
+  // Randomly selects proficiencies from possibilities (proficiencies), based on how many are available (numberprofs)
+  private selectProfs(numberprofs: number, proficiencies: string[]): string[] {
+
+    let j; // Iterator for numberprofs
+    let rolls: number[] = []; // Rolls for proficiencies to check they aren't the same.
+    let returnProfs: string[] = []; // Array to return.
+
+    for (j = 0; j < numberprofs;) {
+      this.dice.rollArb(proficiencies.length)
+        .subscribe(roll => {
+          // Make sure the proficiency being selected hasn't already been selected. If it has roll again.
+          if (rolls.findIndex(k => k === roll) === -1) {
+            rolls.push(roll);
+            returnProfs[j] = proficiencies[roll - 1];
             j++;
           }
         });
     }
+    return returnProfs;
   }
 
   // Modifies attributes given an ordered ability modifier array.
@@ -154,9 +174,63 @@ export class CharacterGeneratorComponent implements OnInit {
     }
   }
 
+  // Selects race from possibilities.
+  private rollRace() {
+    // Pulls random race
+    let raceIndex;
+    this.dice.rollArb(CHARACTERRACES.length)
+      .subscribe(raceRoll => raceIndex = raceRoll - 1);
+    const charRace = CHARACTERRACES[raceIndex];
+
+    // Set race name
+    this.randomCharacter.race = charRace.name;
+
+    // Make any ability modifications
+    this.modifyAttributes(charRace.abilitymodifiers);
+
+    // Set Size
+    this.randomCharacter.size = charRace.size;
+
+    // Set walking speed in feet
+    this.randomCharacter.speed = charRace.speed;
+
+    // Add race features to current Feature list.
+    let i;
+    for (i = 0; i < charRace.features.length; i++) {
+      this.randomCharacter.features.push(charRace.features[i]);
+    }
+
+    // Select skill proficiencies from possibilities if applicable
+    const skillProfs = this.selectProfs(charRace.numberskills, charRace.skillproficiences);
+    for (i = 0; i < skillProfs.length; i++) {
+      this.randomCharacter.skillproficiencies.push(skillProfs[i]);
+    }
+
+    // Select Tool/Armor/Weapon proficiencies from possibilities if applicable
+    const toolProfs = this.selectProfs(charRace.numbertools, charRace.toolselections);
+    for (i = 0; i < toolProfs.length; i++) {
+      this.randomCharacter.toolsandlanguages.push(toolProfs[i]);
+    }
+
+    // Select Languages from possibilities if applicable
+    const languages = this.selectProfs(charRace.numberlanguages, charRace.languageselections);
+    for(i = 0; i < languages.length; i++) {
+      this.randomCharacter.toolsandlanguages.push(languages[i]);
+    }
+
+    // Add default languages, tools, weapons, and armor that do not need selecting.
+    for (i = 0; i < charRace.toolsandlanguages.length; i++) {
+      this.randomCharacter.toolsandlanguages.push(charRace.toolsandlanguages[i]);
+    }
+
+    // Tell template to display.
+    this.raceCalced = true;
+  }
+
   ngOnInit() {
     this.rollAttributes();
     this.rollClass();
+    this.rollRace();
   }
 
 }

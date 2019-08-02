@@ -1,76 +1,102 @@
 <h2 width="40%" margin-left="30%">New Random Character, Level 1</h2>
-<div class="attributes_container" *ngIf="attributesCalced">
-    <mat-card>
-        <mat-card-title>
-            Attributes
-        </mat-card-title>
-        <mat-card-content>
-            Strength: {{randomCharacter.strength}}
-        </mat-card-content>
-        <mat-card-content>
-            Agility: {{randomCharacter.agility}}
-        </mat-card-content>
-        <mat-card-content>
-            Endurance: {{randomCharacter.endurance}}
-        </mat-card-content>
-        <mat-card-content>
-            Intelligence: {{randomCharacter.intelligence}}
-        </mat-card-content>
-        <mat-card-content>
-            Willpower: {{randomCharacter.willpower}}
-        </mat-card-content>
-        <mat-card-content>
-            Personality: {{randomCharacter.personality}}
-        </mat-card-content>
-    </mat-card>
+<div class="flex_container">
+    <div class="content_container" *ngIf="attributesCalced">
+        <mat-card>
+            <mat-card-title>
+                Attributes
+            </mat-card-title>
+            <mat-card-content>
+                Strength: {{randomCharacter.strength}}
+            </mat-card-content>
+            <mat-card-content>
+                Agility: {{randomCharacter.agility}}
+            </mat-card-content>
+            <mat-card-content>
+                Endurance: {{randomCharacter.endurance}}
+            </mat-card-content>
+            <mat-card-content>
+                Intelligence: {{randomCharacter.intelligence}}
+            </mat-card-content>
+            <mat-card-content>
+                Willpower: {{randomCharacter.willpower}}
+            </mat-card-content>
+            <mat-card-content>
+                Personality: {{randomCharacter.personality}}
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="content_container" *ngIf="classCalced">
+        <mat-card>
+            <mat-card-title>
+                Class
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{randomCharacter.class}}
+            </mat-card-subtitle>
+            <mat-card-content>
+                <h4>
+                    Subclass:
+                </h4>
+            </mat-card-content>
+            <mat-card-content>
+                {{randomCharacter.subclass}}
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="content_container">
+        <mat-card>
+            <mat-card-title>
+                Race
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{randomCharacter.race}}
+            </mat-card-subtitle>
+        </mat-card>
+    </div>
+
+    <div class="content_container">
+        <mat-card>
+            <mat-card-title>
+                Skill Proficiencies
+            </mat-card-title>
+            <mat-card-content *ngFor="let skill of randomCharacter.skillproficiencies">
+                {{skill}}                
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="content_container">
+        <mat-card>
+            <mat-card-title>
+                Tool, Weapon, Armor, and Lanuage Proficiencies
+            </mat-card-title>
+            <mat-card-content *ngFor="let tool of randomCharacter.toolsandlanguages">
+                {{tool}}
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+
+    <div class="content_container">
+        <mat-card>
+            <mat-card-title>
+                Features
+            </mat-card-title>
+            <mat-card-content *ngFor="let feature of randomCharacter.features">
+                {{feature}}
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="content_container">
+            <mat-card>
+                <mat-card-title>
+                    Inventory
+                </mat-card-title>
+                <mat-card-content *ngFor="let inventory of randomCharacter.inventory">
+                    {{inventory}}
+                </mat-card-content>
+            </mat-card>
+        </div>
 </div>
-<div class="class_container">
-    <mat-card>
-        <mat-card-title>
-            Class
-        </mat-card-title>
-        <mat-card-subtitle>
-            {{randomCharacter.name}}
-        </mat-card-subtitle>
-        <mat-card-content>
-            <h4>
-                Inventory:
-            </h4>
-        </mat-card-content>
-        <mat-card-content *ngFor="let inventory of randomCharacter.inventory">
-            {{inventory}}
-        </mat-card-content>
-        <mat-card-content>
-            <h4>
-                Skill Proficiencies:
-            </h4>
-        </mat-card-content>
-        <mat-card-content *ngFor="let skill of randomCharacter.skillproficiencies">
-            {{skill}}
-        </mat-card-content>
-        <mat-card-content>
-            <h4>
-                Features:
-            </h4>
-        </mat-card-content>
-        <mat-card-content *ngFor="let feature of randomCharacter.features">
-            {{feature}}
-        </mat-card-content>
-        <mat-card-content>
-            <h4>
-                Tools, Weapons, Armor, and Languages:
-            </h4>
-        </mat-card-content>
-        <mat-card-content *ngFor="let tool of randomCharacter.toolsandlanguages">
-            {{tool}}
-        </mat-card-content>
-        <mat-card-content>
-            <h4>
-                Subclass:
-            </h4>
-        </mat-card-content>
-        <mat-card-content>
-            {{randomCharacter.subclass}}
-        </mat-card-content>
-    </mat-card>
-</div>
+
