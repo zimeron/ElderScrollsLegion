@@ -23,4 +23,5 @@ export class playerCharacter{
     personalityTraits: string[];
     size: string;
     features: string[];
+    septims: number;
 }

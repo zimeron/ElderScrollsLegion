@@ -13,6 +13,8 @@ export const BACKGROUNDS: background[] = [
          'common clothes'],
         septims: 60,
         skillproficiencies: ['Insight', 'Religion'],
+        numberskills: 0,
+        skillselections: [],
         numberlanguages: 2,
         languageselections: [
             'Bosmeri',
@@ -80,6 +82,8 @@ export const BACKGROUNDS: background[] = [
         ],
         septims: 60,
         skillproficiencies: ['Deception', 'Sleight of Hand'],
+        numberskills: 0,
+        skillselections: [],
         numberlanguages: 0,
         languageselections: [],
         numbertools: 0,

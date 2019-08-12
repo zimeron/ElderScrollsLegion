@@ -6,6 +6,9 @@ export class background {
     // Starting gold amount
     septims: number;
     skillproficiencies: string[];
+    // Number of skill proficiencies to be selected from following list
+    numberskills: number;
+    skillselections: string[];
     // Number of tools to be selected from following list
     numbertools: number;
     toolselections: string[];
