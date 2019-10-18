@@ -1,10 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DiceRollerService } from '../../dice-roller.service';
-import { CHARACTERCLASSES } from '../../character-classes/mock-classes';
-import { CHARACTERRACES } from '../../races/mock-races';
-import { characterClass } from '../../character-classes/character-class';
 import { playerCharacter } from '../character';
-import { take } from 'rxjs/operators';
 import { CharacterService } from '../character.service';
 @Component({
   selector: 'app-character-generator',
