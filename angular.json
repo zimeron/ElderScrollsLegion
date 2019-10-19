@@ -59,8 +59,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ElderScrollsLegion:build",
-            "port": 443
+            "browserTarget": "ElderScrollsLegion:build"
           },
           "configurations": {
             "production": {
