@@ -5,11 +5,11 @@ const http = require('http');
 const app = express();
 
 // Serve only the static files form the dist directory
-app.use(express.static('./dist/elderscrollslegion'));
+app.use(express.static('./dist/ElderScrollsLegion'));
 
 app.get('/*', function(req,res) {
     
-res.sendFile(path.join(__dirname,'/dist/elderscrollslegion/index.html'));
+res.sendFile(path.join(__dirname,'/dist/ElderScrollsLegion/index.html'));
 });
 
 const server = http.createServer(app);
