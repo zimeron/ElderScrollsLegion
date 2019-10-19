@@ -1,4 +1,4 @@
-import { birthsign } from './Birthsign';
+import { birthsign } from './birthsign';
 
 export const BIRTHSIGNS: birthsign[] = [
     {
