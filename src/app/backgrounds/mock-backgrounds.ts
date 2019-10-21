@@ -1,6 +1,6 @@
-import { background } from './background';
+import { Background } from './background';
 
-export const BACKGROUNDS: background[] = [
+export const BACKGROUNDS: Background[] = [
     {
         id: 1,
         name: 'Acolyte',

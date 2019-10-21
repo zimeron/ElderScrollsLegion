@@ -3,9 +3,9 @@ import { playerCharacter } from '../characters/character';
 import { DiceRollerService } from '../dice-roller.service';
 import { CHARACTERCLASSES } from '../character-classes/mock-classes';
 import { CHARACTERRACES } from '../races/mock-races';
-import { BACKGROUNDS } from '../backgrounds/mock-backgrounds';
+// import { BACKGROUNDS } from '../backgrounds/mock-backgrounds';
 import { BackgroundsService } from '../backgrounds/backgrounds.service';
-// import { BIRTHSIGNS } from '../birthsigns/mock-birthsigns';
+import { BIRTHSIGNS } from '../birthsigns/mock-birthsigns';
 
 @Injectable({
   providedIn: 'root'
@@ -238,7 +238,7 @@ randomCharacter: playerCharacter = {
     this.dice.rollArb(2)
       .subscribe(roll => {
         const birthisgnIndex = roll - 1;
-        charBirsthign = this.httpClient;
+        charBirsthign = BIRTHSIGNS[birthisgnIndex]
       });
 
     // Sets birthsign name
