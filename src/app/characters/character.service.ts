@@ -4,7 +4,8 @@ import { DiceRollerService } from '../dice-roller.service';
 import { CHARACTERCLASSES } from '../character-classes/mock-classes';
 import { CHARACTERRACES } from '../races/mock-races';
 import { BACKGROUNDS } from '../backgrounds/mock-backgrounds';
-import { BIRTHSIGNS } from '../birthsigns/mock-birthsigns';
+import { BackgroundsService } from '../backgrounds/backgrounds.service';
+// import { BIRTHSIGNS } from '../birthsigns/mock-birthsigns';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ randomCharacter: playerCharacter = {
   septims: 0
 };
 
-  constructor(private dice: DiceRollerService) { }
+  constructor(private dice: DiceRollerService, private backgroundService: BackgroundsService) { }
 
   // Rolls a new character based on random rolls of character properties (class, race, birthsign, background)
   rollCharacter(): playerCharacter {
@@ -171,14 +172,13 @@ randomCharacter: playerCharacter = {
     }
   }
 
-  // Randomly selects a background from the database (currently mocks) and sets data.
+  // Randomly selects a background from the database and sets data.
   private rollBackground() {
     // Pulls random background
     let charBackground;
-    this.dice.rollArb(BACKGROUNDS.length)
-      .subscribe(backgroundRoll => {
-        const backgroundIndex = backgroundRoll - 1;
-        charBackground = BACKGROUNDS[backgroundIndex];
+    this.backgroundService.getRandomBackground()
+      .subscribe(randomBackground => {
+        charBackground = randomBackground;
       });
 
     // Set background name
@@ -235,10 +235,10 @@ randomCharacter: playerCharacter = {
   private rollBirthsign() {
     // Pulls a random birthisgn
     let charBirsthign;
-    this.dice.rollArb(BIRTHSIGNS.length)
+    this.dice.rollArb(2)
       .subscribe(roll => {
         const birthisgnIndex = roll - 1;
-        charBirsthign = BIRTHSIGNS[birthisgnIndex];
+        charBirsthign = this.httpClient;
       });
 
     // Sets birthsign name

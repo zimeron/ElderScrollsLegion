@@ -1,4 +1,4 @@
-export class background {
+export class Background {
     id: number;
     name: string;
     features: string[];
