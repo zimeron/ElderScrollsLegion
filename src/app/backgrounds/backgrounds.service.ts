@@ -13,7 +13,7 @@ export class BackgroundsService {
 
   // HTTP connection information for Ruby on Rails (Puma) server at AWS Lightsail.
   // Specifies that this client expects JSON only, not HTML or XML.
-  featuresURL = 'https://legionbackend.herokuapp.com/backgrounds';
+  backgroundsURL = 'https://legionbackend.herokuapp.com/backgrounds';
   httpOptions = {
     headers: new HttpHeaders({
     'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ export class BackgroundsService {
   // GETs Selected Feature by passing ID from FeatureDetailDisplay to server.
   getBackgroundById(id: number): Observable<Background>{
     this.log('Retrieving Specified Background, please wait');
-    return this.httpClient.get<Background>(this.featuresURL + '/' + id, this.httpOptions)
+    return this.httpClient.get<Background>(this.backgroundsURL + '/' + id, this.httpOptions)
       .pipe(
         tap(() => this.log('feature retrieved'),
         catchError(this.handleError<Background>('getFeatureById'))
