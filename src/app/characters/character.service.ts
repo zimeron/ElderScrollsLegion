@@ -6,6 +6,7 @@ import { CHARACTERRACES } from '../races/mock-races';
 // import { BACKGROUNDS } from '../backgrounds/mock-backgrounds';
 import { BackgroundsService } from '../backgrounds/backgrounds.service';
 import { BIRTHSIGNS } from '../birthsigns/mock-birthsigns';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +66,7 @@ randomCharacter: playerCharacter = {
     for (i = 0; i < 6; i++) {
     // Roll 4d6
     for (j = 0; j < 4; j++) {
-      this.dice.rollSix()
+      this.dice.rollSix().pipe(take(1))
         .subscribe(roll => rolls[j] = roll);
     }
     // Sort Rolls, drop lowest (i.e. first)
@@ -89,7 +90,7 @@ randomCharacter: playerCharacter = {
   private rollClass(): void {
     // Pulls random class
     let charClass;
-    this.dice.rollArb(CHARACTERCLASSES.length)
+    this.dice.rollArb(CHARACTERCLASSES.length).pipe(take(1))
       .subscribe(classRoll => {
         const classIndex = classRoll - 1;
         charClass = CHARACTERCLASSES[classIndex];
@@ -123,7 +124,7 @@ randomCharacter: playerCharacter = {
   private rollRace() {
     // Pulls random race
     let charRace;
-    this.dice.rollArb(CHARACTERRACES.length)
+    this.dice.rollArb(CHARACTERRACES.length).pipe(take(1))
       .subscribe(raceRoll => {
         const raceIndex = raceRoll - 1;
         charRace = CHARACTERRACES[raceIndex];
@@ -176,58 +177,67 @@ randomCharacter: playerCharacter = {
   private rollBackground() {
     // Pulls random background
     let charBackground;
-    this.backgroundService.getRandomBackground()
+    this.backgroundService.getRandomBackground().pipe(take(1))
       .subscribe(randomBackground => {
         charBackground = randomBackground;
+
+        // Set background name
+        this.randomCharacter.background = charBackground.name;
+
+        // Append background features
+        let i;
+        for ( i = 0; i < charBackground.features; i++) {
+          this.randomCharacter.features.push(charBackground.features[i]);
+        }
+
+        // Append background inventory
+        for (i = 0; i < charBackground.inventory; i++){
+          this.randomCharacter.inventory.push(charBackground.inventory[i]);
+        }
+
+        // Set starting gold
+        this.randomCharacter.septims = charBackground.septims;
+
+        // Set default skill proficiencies
+        for ( i = 0; i < charBackground.skillproficiencies; i++) {
+          this.randomCharacter.skillproficiencies.push(charBackground.features[i]);
+        }
+
+        // Selects skill proficiency choices if applicable
+        if (charBackground.numberskills !== 0) {
+            this.selectProfs(charBackground.numberskills, charBackground.skillselections);
+        }
+
+        // Selects tool proficiencies if applicable
+        if (charBackground.numbertools !== 0) {
+          this.selectProfs(charBackground.numbertools, charBackground.toolselections);
+        }
+
+        // Selects languages if applicable
+        if (charBackground.numberlanguages !== 0) {
+          this.selectProfs(charBackground.numberlanguages, charBackground.languageselections);
+        }
+
+        // Pulls in default languages and tool proficiencies
+        if (charBackground.toolsandlanguages !== null){
+          for ( i = 0; i < charBackground.toolsandlanguages.length; i++) {
+            this.randomCharacter.toolsandlanguages.push(charBackground.toolsandlanguages[i]);
+          }
+        }
+
+        // Randomly selects a personality trait from available list
+        this.selectPersonality(charBackground.personalities);
+
+        // Randomly selects an ideal from available list
+        this.selectPersonality(charBackground.ideals);
+
+        // Randomly selects a bond from available list
+        this.selectPersonality(charBackground.bonds);
+
+        // Randomly selects a flaw from the available list
+        this.selectPersonality(charBackground.flaws);
+
       });
-
-    // Set background name
-    this.randomCharacter.background = charBackground.name;
-
-    // Append background features
-    let i;
-    for ( i = 0; i < charBackground.features; i++) {
-      this.randomCharacter.features.push(charBackground.features[i]);
-    }
-
-    // Append background inventory
-    for (i = 0; i < charBackground.inventory; i++){
-      this.randomCharacter.inventory.push(charBackground.inventory[i]);
-    }
-
-    // Set starting gold
-    this.randomCharacter.septims = charBackground.septims;
-
-    // Set default skill proficiencies
-    for ( i = 0; i < charBackground.skillproficiencies; i++) {
-      this.randomCharacter.skillproficiencies.push(charBackground.features[i]);
-    }
-
-    // Selects skill proficiency choices if applicable
-    this.selectProfs(charBackground.numberskills, charBackground.skillselections);
-
-    // Selects tool proficiencies if applicable
-    this.selectProfs(charBackground.numbertools, charBackground.toolselections);
-
-    // Selects languages if applicable
-    this.selectProfs(charBackground.numberlanguages, charBackground.languageselections);
-
-    // Pulls in default languages and tool proficiencies
-    for ( i = 0; i < charBackground.toolsandlanguages.length; i++) {
-      this.randomCharacter.toolsandlanguages.push(charBackground.toolsandlanguages[i]);
-    }
-
-    // Randomly selects a personality trait from available list
-    this.selectPersonality(charBackground.personalities);
-
-    // Randomly selects an ideal from available list
-    this.selectPersonality(charBackground.ideals);
-
-    // Randomly selects a bond from available list
-    this.selectPersonality(charBackground.bonds);
-
-    // Randomly selects a flaw from the available list
-    this.selectPersonality(charBackground.flaws);
 
   }
 
@@ -235,7 +245,7 @@ randomCharacter: playerCharacter = {
   private rollBirthsign() {
     // Pulls a random birthisgn
     let charBirsthign;
-    this.dice.rollArb(BIRTHSIGNS.length)
+    this.dice.rollArb(BIRTHSIGNS.length).pipe(take(1))
       .subscribe(roll => {
         const birthisgnIndex = roll - 1;
         charBirsthign = BIRTHSIGNS[birthisgnIndex]
@@ -262,7 +272,7 @@ randomCharacter: playerCharacter = {
     let coinFlipResult;
 
     for (i = 0; i < inventoryselections.length; i += 2) {
-      this.dice.coinFlip()
+      this.dice.coinFlip().pipe(take(1))
         .subscribe(coinFlip => {
           coinFlipResult = coinFlip;
           // Choose either first element in the pair, or the next. Iterate by 2 to skip to next pair.
@@ -283,7 +293,7 @@ randomCharacter: playerCharacter = {
     let returnProfs: string[] = []; // Array to return.
 
     for (j = 0; j < numberprofs;) {
-      this.dice.rollArb(proficiencies.length)
+      this.dice.rollArb(proficiencies.length).pipe(take(1))
         .subscribe(roll => {
           // Make sure the proficiency being selected hasn't already been selected. If it has roll again.
           if (rolls.findIndex(k => k === roll) === -1) {
@@ -309,14 +319,14 @@ randomCharacter: playerCharacter = {
   // Selects subclass from possibilities if applicable.
   private selectSubClass(subclasses: string[]) {
     if (subclasses.length > 0) {
-      this.dice.rollArb(subclasses.length)
+      this.dice.rollArb(subclasses.length).pipe(take(1))
       .subscribe(roll => this.randomCharacter.subclass = subclasses[roll - 1]);
     }
   }
 
   // Selects personality traits from possibilities for backgrounds
   private selectPersonality(personalityTraits: string[]) {
-    this.dice.rollArb(personalityTraits.length)
+    this.dice.rollArb(personalityTraits.length).pipe(take(1))
     .subscribe(roll => this.randomCharacter.personalityTraits.push(personalityTraits[roll - 1]));
   }
 
