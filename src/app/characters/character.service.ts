@@ -235,7 +235,7 @@ randomCharacter: playerCharacter = {
   private rollBirthsign() {
     // Pulls a random birthisgn
     let charBirsthign;
-    this.dice.rollArb(2)
+    this.dice.rollArb(BIRTHSIGNS.length)
       .subscribe(roll => {
         const birthisgnIndex = roll - 1;
         charBirsthign = BIRTHSIGNS[birthisgnIndex]
