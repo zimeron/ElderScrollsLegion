@@ -3,7 +3,6 @@ import { playerCharacter } from '../characters/character';
 import { DiceRollerService } from '../dice-roller.service';
 import { CHARACTERCLASSES } from '../character-classes/mock-classes';
 import { CHARACTERRACES } from '../races/mock-races';
-// import { BACKGROUNDS } from '../backgrounds/mock-backgrounds';
 import { BackgroundsService } from '../backgrounds/backgrounds.service';
 import { BIRTHSIGNS } from '../birthsigns/mock-birthsigns';
 import { take } from 'rxjs/operators';
