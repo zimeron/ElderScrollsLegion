@@ -186,12 +186,12 @@ randomCharacter: playerCharacter = {
 
         // Append background features
         let i;
-        for ( i = 0; i < charBackground.features; i++) {
+        for ( i = 0; i < charBackground.features.length; i++) {
           this.randomCharacter.features.push(charBackground.features[i]);
         }
 
         // Append background inventory
-        for (i = 0; i < charBackground.inventory; i++){
+        for (i = 0; i < charBackground.inventory.length; i++){
           this.randomCharacter.inventory.push(charBackground.inventory[i]);
         }
 
@@ -199,7 +199,7 @@ randomCharacter: playerCharacter = {
         this.randomCharacter.septims = charBackground.septims;
 
         // Set default skill proficiencies
-        for ( i = 0; i < charBackground.skillproficiencies; i++) {
+        for ( i = 0; i < charBackground.skillproficiencies.length; i++) {
           this.randomCharacter.skillproficiencies.push(charBackground.features[i]);
         }
 
