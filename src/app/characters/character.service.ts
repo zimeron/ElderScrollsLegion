@@ -7,6 +7,7 @@ import { CHARACTERRACES } from '../races/mock-races';
 import { BackgroundsService } from '../backgrounds/backgrounds.service';
 import { BIRTHSIGNS } from '../birthsigns/mock-birthsigns';
 import { take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -47,13 +48,13 @@ randomCharacter: playerCharacter = {
   constructor(private dice: DiceRollerService, private backgroundService: BackgroundsService) { }
 
   // Rolls a new character based on random rolls of character properties (class, race, birthsign, background)
-  rollCharacter(): playerCharacter {
+  rollCharacter(): Observable<playerCharacter> {
     this.rollAttributes();
     this.rollClass();
     this.rollRace();
     this.rollBackground();
     this.rollBirthsign();
-    return this.randomCharacter;
+    return of(this.randomCharacter);
   }
 
   // Rolls attributes by summing 4d6 drop lowest for each attribute. And updates properties for binding.
@@ -105,7 +106,7 @@ randomCharacter: playerCharacter = {
     this.selectInventory(charClass.inventoryselections);
 
     // Select Skill Proficiencies
-    this.randomCharacter.skillproficiencies = this.selectProfs(charClass.numberskills, charClass.skillproficienies);
+    this.selectProfs(charClass.numberskills, charClass.skillproficienies, this.randomCharacter.skillproficiencies);
 
     // Pull in features
     this.randomCharacter.features = charClass.features;
@@ -150,22 +151,13 @@ randomCharacter: playerCharacter = {
     }
 
     // Select skill proficiencies from possibilities if applicable
-    const skillProfs = this.selectProfs(charRace.numberskills, charRace.skillproficiences);
-    for (i = 0; i < skillProfs.length; i++) {
-      this.randomCharacter.skillproficiencies.push(skillProfs[i]);
-    }
+    this.selectProfs(charRace.numberskills, charRace.skillproficiences, this.randomCharacter.skillproficiencies);
 
     // Select Tool/Armor/Weapon proficiencies from possibilities if applicable
-    const toolProfs = this.selectProfs(charRace.numbertools, charRace.toolselections);
-    for (i = 0; i < toolProfs.length; i++) {
-      this.randomCharacter.toolsandlanguages.push(toolProfs[i]);
-    }
+    this.selectProfs(charRace.numbertools, charRace.toolselections, this.randomCharacter.toolsandlanguages);
 
     // Select Languages from possibilities if applicable
-    const languages = this.selectProfs(charRace.numberlanguages, charRace.languageselections);
-    for(i = 0; i < languages.length; i++) {
-      this.randomCharacter.toolsandlanguages.push(languages[i]);
-    }
+    this.selectProfs(charRace.numberlanguages, charRace.languageselections, this.randomCharacter.toolsandlanguages);
 
     // Add default languages, tools, weapons, and armor that do not need selecting.
     for (i = 0; i < charRace.toolsandlanguages.length; i++) {
@@ -200,22 +192,22 @@ randomCharacter: playerCharacter = {
 
         // Set default skill proficiencies
         for ( i = 0; i < charBackground.skillproficiencies.length; i++) {
-          this.randomCharacter.skillproficiencies.push(charBackground.features[i]);
+          this.randomCharacter.skillproficiencies.push(charBackground.skillproficiencies[i]);
         }
 
         // Selects skill proficiency choices if applicable
         if (charBackground.numberskills !== 0) {
-            this.selectProfs(charBackground.numberskills, charBackground.skillselections);
+          this.selectProfs(charBackground.numberskills, charBackground.skillselections, this.randomCharacter.skillproficiencies);
         }
 
         // Selects tool proficiencies if applicable
         if (charBackground.numbertools !== 0) {
-          this.selectProfs(charBackground.numbertools, charBackground.toolselections);
+          this.selectProfs(charBackground.numbertools, charBackground.toolselections, this.randomCharacter.toolsandlanguages);
         }
 
         // Selects languages if applicable
         if (charBackground.numberlanguages !== 0) {
-          this.selectProfs(charBackground.numberlanguages, charBackground.languageselections);
+          this.selectProfs(charBackground.numberlanguages, charBackground.languageselections, this.randomCharacter.toolsandlanguages);
         }
 
         // Pulls in default languages and tool proficiencies
@@ -286,24 +278,24 @@ randomCharacter: playerCharacter = {
   }
 
   // Randomly selects proficiencies from possibilities (proficiencies), based on how many are available (numberprofs)
-  private selectProfs(numberprofs: number, proficiencies: string[]): string[] {
+  // Checks if the proficiency is already selected by some other origin (alreadySelected)
+  private selectProfs(numberprofs: number, proficiencies: string[], alreadySelected: string[]): void {
 
     let j; // Iterator for numberprofs
     let rolls: number[] = []; // Rolls for proficiencies to check they aren't the same.
-    let returnProfs: string[] = []; // Array to return.
 
+    // TODO: watch for infinite loops here
     for (j = 0; j < numberprofs;) {
       this.dice.rollArb(proficiencies.length).pipe(take(1))
         .subscribe(roll => {
           // Make sure the proficiency being selected hasn't already been selected. If it has roll again.
-          if (rolls.findIndex(k => k === roll) === -1) {
+          if (rolls.findIndex(k => k === roll) === -1 && alreadySelected.findIndex(x => x === proficiencies[roll - 1]) === -1) {
             rolls.push(roll);
-            returnProfs[j] = proficiencies[roll - 1];
+            alreadySelected.push(proficiencies[roll - 1]);
             j++;
           }
         });
     }
-    return returnProfs;
   }
 
   // Modifies attributes given an ordered ability modifier array.

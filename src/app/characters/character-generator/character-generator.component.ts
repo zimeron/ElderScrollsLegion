@@ -2,6 +2,7 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { DiceRollerService } from '../../dice-roller.service';
 import { playerCharacter } from '../character';
 import { CharacterService } from '../character.service';
+import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-character-generator',
   templateUrl: './character-generator.component.html',
@@ -44,11 +45,14 @@ export class CharacterGeneratorComponent implements OnInit {
   // Flags for template
   charCalced = false;
 
-  constructor(private dice: DiceRollerService, private charService: CharacterService) { }
+  constructor(private charService: CharacterService) { }
 
   ngOnInit() {
-    this.randomCharacter = this.charService.rollCharacter();
-    this.charCalced = true;
+    this.charService.rollCharacter().pipe(take(1))
+      .subscribe(rolledCharacter => {
+        this.randomCharacter = rolledCharacter,
+        this.charCalced = true;
+      });
   }
 
 }
