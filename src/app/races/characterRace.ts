@@ -22,4 +22,6 @@ export class characterRace {
     languageselections: string[];
     // Languages and Proficiencies that do not need to be chosen.
     toolsandlanguages: string[];
+    // Luck points from race
+    luck: number;
 }

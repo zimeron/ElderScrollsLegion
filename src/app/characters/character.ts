@@ -24,4 +24,5 @@ export class playerCharacter{
     size: string;
     features: string[];
     septims: number;
+    luck: number;
 }

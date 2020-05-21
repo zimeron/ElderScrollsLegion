@@ -39,7 +39,8 @@ export class CharacterGeneratorComponent implements OnInit {
     personalityTraits: [],
     size: '',
     features: [],
-    septims: 0
+    septims: 0,
+    luck: 0
   };
 
   // Flags for template

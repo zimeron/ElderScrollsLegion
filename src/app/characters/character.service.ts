@@ -41,7 +41,8 @@ randomCharacter: playerCharacter = {
   personalityTraits: [],
   size: '',
   features: [],
-  septims: 0
+  septims: 0,
+  luck: 0
 };
 
   constructor(private dice: DiceRollerService, private backgroundService: BackgroundsService) { }
@@ -162,6 +163,10 @@ randomCharacter: playerCharacter = {
     for (i = 0; i < charRace.toolsandlanguages.length; i++) {
       this.randomCharacter.toolsandlanguages.push(charRace.toolsandlanguages[i]);
     }
+
+    // Add luck from race
+    this.randomCharacter.luck = charRace.luck;
+    
   }
 
   // Randomly selects a background from the database and sets data.

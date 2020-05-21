@@ -14,7 +14,8 @@ export const CHARACTERRACES: characterRace[] = [
         toolselections: ['Alchemist Supplies', 'Calligrapher Supplies', 'Jeweler Tools'],
         numberlanguages: 2,
         languageselections: ['Bosmeri', 'Dunmeri', 'Jel', 'Orcish', 'Ta\'agra', 'Yoku'],
-        toolsandlanguages: ['Tamrielic']
+        toolsandlanguages: ['Tamrielic'],
+        luck: 0
     },
     {
         id: 2,
@@ -29,6 +30,7 @@ export const CHARACTERRACES: characterRace[] = [
         toolselections: [],
         numberlanguages: 0,
         languageselections: [],
-        toolsandlanguages: ['Alchemist Supplies', 'Short Blades', 'Spears', 'Tamrielic', 'Jel']
+        toolsandlanguages: ['Alchemist Supplies', 'Short Blades', 'Spears', 'Tamrielic', 'Jel'],
+        luck: 0
     }
 ];
