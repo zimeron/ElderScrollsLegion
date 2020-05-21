@@ -33,7 +33,7 @@ export class BackgroundsService {
   // Grabs a randomly rolled background by ID. (2 is subject to change based on number of backgrounds in the DB)
   getRandomBackground(): Observable<Background> {
     let backgroundID;
-    this.diceRoller.rollArb(2).pipe(take(1))
+    this.diceRoller.rollArb(4).pipe(take(1))
       .subscribe(backgroundRoll => backgroundID = backgroundRoll);
     return this.getBackgroundById(backgroundID);
   }
