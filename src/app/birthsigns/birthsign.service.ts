@@ -1,45 +1,45 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { characterRace } from './characterRace';
-import { take, tap, catchError } from 'rxjs/operators';
+import { Birthsign } from './birthsign';
 import { MessageService } from '../message.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { tap, catchError, take } from 'rxjs/operators';
 import { DiceRollerService } from '../dice-roller.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RaceService {
+export class BirthsignService {
   // HTTP connection information for Ruby on Rails (Puma) server at Heroku.
   // Specifies that this client expects JSON only, not HTML or XML.
-  racesURL = 'https://legionbackend.herokuapp.com/races';
+  racesURL = 'https://legionbackend.herokuapp.com/birthsigns';
   httpOptions = {
     headers: new HttpHeaders({
     'Content-Type': 'application/json'
     })
   };
 
-  // GETs Selected Background by passing ID from FeatureDetailDisplay to server.
-  getRaceById(id: number): Observable<characterRace>{
-    this.log('Retrieving Specified Race, please wait');
-    return this.httpClient.get<characterRace>(this.racesURL + '/' + id, this.httpOptions)
+  // GETs Selected Birthsign by passing ID to server.
+  getBirthsignById(id: number): Observable<Birthsign>{
+    this.log('Retrieving Specified Birthsign, please wait');
+    return this.httpClient.get<Birthsign>(this.racesURL + '/' + id, this.httpOptions)
       .pipe(
-        tap(() => this.log('race retrieved'),
-        catchError(this.handleError<characterRace>('getRaceById'))
+        tap(() => this.log('birthsign retrieved'),
+        catchError(this.handleError<Birthsign>('getBirthsignById'))
         ));
   }
 
-  // Grabs a randomly rolled Race by ID. (5 is subject to change based on number of Races in the DB)
-  getRandomRace(): Observable<characterRace> {
-    let raceID;
+  // Grabs a randomly rolled Birthsign by ID. (5 is subject to change based on number of Races in the DB)
+  getRandomBirthsign(): Observable<Birthsign> {
+    let birthsignID;
     this.diceRoller.rollArb(7).pipe(take(1))
-      .subscribe(raceRoll => raceID = raceRoll);
-    return this.getRaceById(raceID);
+      .subscribe(birthsignRoll => birthsignID = birthsignRoll);
+    return this.getBirthsignById(birthsignID);
   }
 
   // Shows messages using Message Service
   private log(message: string) {
-    this.messageService.add(`Race Service: ${message}`);
+    this.messageService.add(`Birthsign Service: ${message}`);
   }
 
   // Handles errors on HTTP requests

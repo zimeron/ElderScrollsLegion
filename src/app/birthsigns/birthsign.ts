@@ -1,4 +1,4 @@
-export class birthsign {
+export class Birthsign {
     id: number;
     name: string;
     features: string[];

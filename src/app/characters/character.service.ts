@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { playerCharacter } from '../characters/character';
 import { DiceRollerService } from '../dice-roller.service';
 import { CHARACTERCLASSES } from '../character-classes/mock-classes';
-import { CHARACTERRACES } from '../races/mock-races';
 import { BackgroundsService } from '../backgrounds/backgrounds.service';
-import { BIRTHSIGNS } from '../birthsigns/mock-birthsigns';
+import { BirthsignService } from '../birthsigns/birthsign.service';
 import { take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { RaceService } from '../races/race.service';
@@ -47,7 +46,7 @@ randomCharacter: playerCharacter = {
   savingthrows: []
 };
 
-  constructor(private dice: DiceRollerService, private backgroundService: BackgroundsService, private raceService: RaceService) { }
+  constructor(private dice: DiceRollerService, private backgroundService: BackgroundsService, private raceService: RaceService, private birthsignService: BirthsignService) { }
 
   // Rolls a new character based on random rolls of character properties (class, race, birthsign, background)
   rollCharacter(): Observable<playerCharacter> {
@@ -252,25 +251,24 @@ randomCharacter: playerCharacter = {
   // Rolls a random birthsign and updates data
   private rollBirthsign() {
     // Pulls a random birthisgn
-    let charBirsthign;
-    this.dice.rollArb(BIRTHSIGNS.length).pipe(take(1))
-      .subscribe(roll => {
-        const birthisgnIndex = roll - 1;
-        charBirsthign = BIRTHSIGNS[birthisgnIndex]
-      });
+    let charBirthsign;
+    this.birthsignService.getRandomBirthsign().pipe(take(1))
+      .subscribe(randomBirthsign => {
+        charBirthsign = randomBirthsign;
 
     // Sets birthsign name
-    this.randomCharacter.birthsign = charBirsthign.name;
+        this.randomCharacter.birthsign = charBirthsign.name;
 
     // Appends birthsign features
-    let i;
-    for (i = 0; i < charBirsthign.features.length; i++) {
-      this.randomCharacter.features.push(charBirsthign.features[i]);
+        let i;
+        for (i = 0; i < charBirthsign.features.length; i++) {
+      this.randomCharacter.features.push(charBirthsign.features[i]);
     }
 
     // Modify Attributes
-    this.modifyAttributes(charBirsthign.abilitymodifiers);
-  }
+        this.modifyAttributes(charBirthsign.abilitymodifiers);
+  });
+}
 
   // ****** Helper functions for rolling methods ****** //
 
