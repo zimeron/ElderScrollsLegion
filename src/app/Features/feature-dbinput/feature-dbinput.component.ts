@@ -23,7 +23,7 @@ export class FeatureDBInputComponent implements OnInit {
     origin: new FormControl('')
   });
   // Binding for textarea autosizing.
-  @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize;
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
   // Textarea resize logic
   triggerResize() {
     // Wait for changes to be applied, then trigger textarea resize.
