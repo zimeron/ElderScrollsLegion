@@ -133,53 +133,52 @@ randomCharacter: playerCharacter = {
     this.raceService.getRandomRace().pipe(take(1))
       .subscribe(randomRace => {
         charRace = randomRace;
-      });
 
+      // Set race name
+        this.randomCharacter.race = charRace.name;
 
-    // Set race name
-    this.randomCharacter.race = charRace.name;
+      // Make any ability modifications
+        this.modifyAttributes(charRace.abilitymodifiers);
 
-    // Make any ability modifications
-    this.modifyAttributes(charRace.abilitymodifiers);
+      // Set Size
+        this.randomCharacter.size = charRace.size;
 
-    // Set Size
-    this.randomCharacter.size = charRace.size;
+      // Set walking speed in feet
+        this.randomCharacter.speed = charRace.speed;
 
-    // Set walking speed in feet
-    this.randomCharacter.speed = charRace.speed;
+      // Add race features to current Feature list.
+        let i;
+        for (i = 0; i < charRace.features.length; i++) {
+        this.randomCharacter.features.push(charRace.features[i]);
+      }
 
-    // Add race features to current Feature list.
-    let i;
-    for (i = 0; i < charRace.features.length; i++) {
-      this.randomCharacter.features.push(charRace.features[i]);
-    }
+      // Select skill proficiencies from possibilities if applicable
+        this.selectProfs(charRace.numberskills, charRace.skillproficiences, this.randomCharacter.skillproficiencies);
 
-    // Select skill proficiencies from possibilities if applicable
-    this.selectProfs(charRace.numberskills, charRace.skillproficiences, this.randomCharacter.skillproficiencies);
+      // Select Tool/Armor/Weapon proficiencies from possibilities if applicable
+        this.selectProfs(charRace.numbertools, charRace.toolselections, this.randomCharacter.toolsandlanguages);
 
-    // Select Tool/Armor/Weapon proficiencies from possibilities if applicable
-    this.selectProfs(charRace.numbertools, charRace.toolselections, this.randomCharacter.toolsandlanguages);
+      // Select Languages from possibilities if applicable
+        this.selectProfs(charRace.numberlanguages, charRace.languageselections, this.randomCharacter.toolsandlanguages);
 
-    // Select Languages from possibilities if applicable
-    this.selectProfs(charRace.numberlanguages, charRace.languageselections, this.randomCharacter.toolsandlanguages);
+      // Add default languages, tools, weapons, and armor that do not need selecting.
+        for (i = 0; i < charRace.toolsandlanguages.length; i++) {
+        this.randomCharacter.toolsandlanguages.push(charRace.toolsandlanguages[i]);
+      }
 
-    // Add default languages, tools, weapons, and armor that do not need selecting.
-    for (i = 0; i < charRace.toolsandlanguages.length; i++) {
-      this.randomCharacter.toolsandlanguages.push(charRace.toolsandlanguages[i]);
-    }
+      // Add luck from race
+        this.randomCharacter.luck = charRace.luck;
 
-    // Add luck from race
-    this.randomCharacter.luck = charRace.luck;
-
-    // Add saving throws from race (if applicable)
-    if (charRace.savingthrows) {
-      for (i = 0; i < charRace.savingthrows.length; i++) {
-        // Checks if the saving throw was already granted by class, ignores it if so.
-        if (this.randomCharacter.savingthrows.findIndex(k => k === charRace.savingthrows[i]) === -1) {
-          this.randomCharacter.savingthrows.push(charRace.savingthrows[i]);
+      // Add saving throws from race (if applicable)
+        if (charRace.savingthrows) {
+        for (i = 0; i < charRace.savingthrows.length; i++) {
+          // Checks if the saving throw was already granted by class, ignores it if so.
+          if (this.randomCharacter.savingthrows.findIndex(k => k === charRace.savingthrows[i]) === -1) {
+            this.randomCharacter.savingthrows.push(charRace.savingthrows[i]);
+          }
         }
       }
-    }
+    });
   }
 
   // Randomly selects a background from the database and sets data.
