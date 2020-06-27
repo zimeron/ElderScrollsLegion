@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { playerCharacter } from '../characters/character';
 import { DiceRollerService } from '../dice-roller.service';
-import { CHARACTERCLASSES } from '../character-classes/mock-classes';
 import { BackgroundsService } from '../backgrounds/backgrounds.service';
 import { BirthsignService } from '../birthsigns/birthsign.service';
 import { take } from 'rxjs/operators';
