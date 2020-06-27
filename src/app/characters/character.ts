@@ -20,7 +20,6 @@ export class playerCharacter{
     skillproficiencies: string[];
     toolsandlanguages: string[];
     speed: number;
-    personalityTraits: string[];
     size: string;
     features: string[];
     septims: number;

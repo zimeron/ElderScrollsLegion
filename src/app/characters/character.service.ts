@@ -38,7 +38,6 @@ randomCharacter: playerCharacter = {
   skillproficiencies: [],
   toolsandlanguages: [],
   speed: 0,
-  personalityTraits: [],
   size: '',
   features: [],
   septims: 0,
@@ -151,8 +150,9 @@ randomCharacter: playerCharacter = {
         this.randomCharacter.features.push(charRace.features[i]);
       }
 
+        console.log(charRace);
       // Select skill proficiencies from possibilities if applicable
-        this.selectProfs(charRace.numberskills, charRace.skillproficiences, this.randomCharacter.skillproficiencies);
+        this.selectProfs(charRace.numberskills, charRace.skillproficiencies, this.randomCharacter.skillproficiencies);
 
       // Select Tool/Armor/Weapon proficiencies from possibilities if applicable
         this.selectProfs(charRace.numbertools, charRace.toolselections, this.randomCharacter.toolsandlanguages);
@@ -231,18 +231,6 @@ randomCharacter: playerCharacter = {
             this.randomCharacter.toolsandlanguages.push(charBackground.toolsandlanguages[i]);
           }
         }
-
-        // Randomly selects a personality trait from available list
-        this.selectPersonality(charBackground.personalities);
-
-        // Randomly selects an ideal from available list
-        this.selectPersonality(charBackground.ideals);
-
-        // Randomly selects a bond from available list
-        this.selectPersonality(charBackground.bonds);
-
-        // Randomly selects a flaw from the available list
-        this.selectPersonality(charBackground.flaws);
 
       });
 
@@ -329,11 +317,4 @@ randomCharacter: playerCharacter = {
       .subscribe(roll => this.randomCharacter.subclass = subclasses[roll - 1]);
     }
   }
-
-  // Selects personality traits from possibilities for backgrounds
-  private selectPersonality(personalityTraits: string[]) {
-    this.dice.rollArb(personalityTraits.length).pipe(take(1))
-    .subscribe(roll => this.randomCharacter.personalityTraits.push(personalityTraits[roll - 1]));
-  }
-
 }

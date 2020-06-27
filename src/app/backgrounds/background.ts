@@ -17,9 +17,4 @@ export class Background {
     languageselections: string[];
     // Tool/language proficiences that do not require selection.
     toolsandlanguages: string[];
-    // Personality Traits
-    personalities: string[];
-    ideals: string[];
-    bonds: string[];
-    flaws: string[];
 }

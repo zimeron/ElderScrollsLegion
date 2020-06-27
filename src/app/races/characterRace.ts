@@ -13,7 +13,7 @@ export class characterRace {
     features: string[];
     // Number of skill proficiencies to choose from following list.
     numberskills: number;
-    skillproficiences: string[];
+    skillproficiencies: string[];
     // Number of tool proficiencies to choose from following list.
     numbertools: number;
     toolselections: string[];

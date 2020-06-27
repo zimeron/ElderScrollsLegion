@@ -36,7 +36,6 @@ export class CharacterGeneratorComponent implements OnInit {
     skillproficiencies: [],
     toolsandlanguages: [],
     speed: 0,
-    personalityTraits: [],
     size: '',
     features: [],
     septims: 0,
