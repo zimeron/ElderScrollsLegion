@@ -172,10 +172,12 @@ randomCharacter: playerCharacter = {
     this.randomCharacter.luck = charRace.luck;
 
     // Add saving throws from race (if applicable)
-    for (i = 0; i < charRace.savingthrows.length; i++) {
-      // Checks if the saving throw was already granted by class, ignores it if so.
-      if (this.randomCharacter.savingthrows.findIndex(k => k === charRace.savingthrows[i]) === -1) {
-        this.randomCharacter.savingthrows.push(charRace.savingthrows[i]);
+    if (charRace.savingthrows) {
+      for (i = 0; i < charRace.savingthrows.length; i++) {
+        // Checks if the saving throw was already granted by class, ignores it if so.
+        if (this.randomCharacter.savingthrows.findIndex(k => k === charRace.savingthrows[i]) === -1) {
+          this.randomCharacter.savingthrows.push(charRace.savingthrows[i]);
+        }
       }
     }
   }
