@@ -7,6 +7,7 @@ import { BackgroundsService } from '../backgrounds/backgrounds.service';
 import { BIRTHSIGNS } from '../birthsigns/mock-birthsigns';
 import { take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { RaceService } from '../races/race.service';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,7 @@ randomCharacter: playerCharacter = {
   savingthrows: []
 };
 
-  constructor(private dice: DiceRollerService, private backgroundService: BackgroundsService) { }
+  constructor(private dice: DiceRollerService, private backgroundService: BackgroundsService, private raceService: RaceService) { }
 
   // Rolls a new character based on random rolls of character properties (class, race, birthsign, background)
   rollCharacter(): Observable<playerCharacter> {
@@ -129,10 +130,9 @@ randomCharacter: playerCharacter = {
   private rollRace() {
     // Pulls random race
     let charRace;
-    this.dice.rollArb(CHARACTERRACES.length).pipe(take(1))
-      .subscribe(raceRoll => {
-        const raceIndex = raceRoll - 1;
-        charRace = CHARACTERRACES[raceIndex];
+    this.raceService.getRandomRace().pipe(take(1))
+      .subscribe(randomRace => {
+        charRace = randomRace;
       });
 
 

@@ -20,7 +20,7 @@ export class BackgroundsService {
     })
   };
 
-  // GETs Selected Feature by passing ID from FeatureDetailDisplay to server.
+  // GETs Selected Background by passing ID from FeatureDetailDisplay to server.
   getBackgroundById(id: number): Observable<Background>{
     this.log('Retrieving Specified Background, please wait');
     return this.httpClient.get<Background>(this.backgroundsURL + '/' + id, this.httpOptions)
@@ -30,7 +30,7 @@ export class BackgroundsService {
         ));
   }
 
-  // Grabs a randomly rolled background by ID. (5 is subject to change based on number of backgrounds in the DB)
+  // Grabs a randomly rolled Background by ID. (5 is subject to change based on number of backgrounds in the DB)
   getRandomBackground(): Observable<Background> {
     let backgroundID;
     this.diceRoller.rollArb(5).pipe(take(1))
