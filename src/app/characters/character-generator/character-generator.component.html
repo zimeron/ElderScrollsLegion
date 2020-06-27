@@ -3,6 +3,14 @@
     <div class="content_container">
         <mat-card>
             <mat-card-title>
+                Saving Throws
+            </mat-card-title>
+            <mat-card-content *ngFor="let throw of randomCharacter.savingthrows">
+                {{throw}}
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-title>
                 Attributes
             </mat-card-title>
             <mat-card-content>

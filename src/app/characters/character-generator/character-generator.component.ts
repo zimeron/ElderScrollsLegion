@@ -40,7 +40,8 @@ export class CharacterGeneratorComponent implements OnInit {
     size: '',
     features: [],
     septims: 0,
-    luck: 0
+    luck: 0,
+    savingthrows: []
   };
 
   // Flags for template

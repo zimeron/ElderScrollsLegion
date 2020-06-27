@@ -24,4 +24,6 @@ export class characterRace {
     toolsandlanguages: string[];
     // Luck points from race
     luck: number;
+    // Saving throws if applicable.
+    savingThrows: string[];
 }

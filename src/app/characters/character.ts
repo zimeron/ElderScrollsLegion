@@ -25,4 +25,5 @@ export class playerCharacter{
     features: string[];
     septims: number;
     luck: number;
+    savingthrows: string[];
 }

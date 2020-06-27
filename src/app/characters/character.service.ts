@@ -42,7 +42,8 @@ randomCharacter: playerCharacter = {
   size: '',
   features: [],
   septims: 0,
-  luck: 0
+  luck: 0,
+  savingthrows: []
 };
 
   constructor(private dice: DiceRollerService, private backgroundService: BackgroundsService) { }
@@ -119,6 +120,9 @@ randomCharacter: playerCharacter = {
 
     // Select sub class if applicable
     this.selectSubClass(charClass.subclasses);
+
+    // Pull in saving throws
+    this.randomCharacter.savingthrows = charClass.savingthrows;
   }
 
   // Selects race from database (currently mocks) at random, and fills in necessary data.
@@ -166,7 +170,14 @@ randomCharacter: playerCharacter = {
 
     // Add luck from race
     this.randomCharacter.luck = charRace.luck;
-    
+
+    // Add saving throws from race (if applicable)
+    for (i = 0; i < charRace.savingthrows.length; i++) {
+      // Checks if the saving throw was already granted by class, ignores it if so.
+      if (this.randomCharacter.savingthrows.findIndex(k => k === charRace.savingthrows[i]) === -1) {
+        this.randomCharacter.savingthrows.push(charRace.savingthrows[i]);
+      }
+    }
   }
 
   // Randomly selects a background from the database and sets data.
