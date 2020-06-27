@@ -7,6 +7,7 @@ import { BirthsignService } from '../birthsigns/birthsign.service';
 import { take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { RaceService } from '../races/race.service';
+import { CharacterClassService } from '../character-classes/character-class-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,13 @@ randomCharacter: playerCharacter = {
   savingthrows: []
 };
 
-  constructor(private dice: DiceRollerService, private backgroundService: BackgroundsService, private raceService: RaceService, private birthsignService: BirthsignService) { }
+  constructor(
+    private dice: DiceRollerService,
+    private backgroundService: BackgroundsService,
+    private raceService: RaceService,
+    private birthsignService: BirthsignService,
+    private classService: CharacterClassService
+  ) { }
 
   // Rolls a new character based on random rolls of character properties (class, race, birthsign, background)
   rollCharacter(): Observable<playerCharacter> {
@@ -91,37 +98,37 @@ randomCharacter: playerCharacter = {
   private rollClass(): void {
     // Pulls random class
     let charClass;
-    this.dice.rollArb(CHARACTERCLASSES.length).pipe(take(1))
-      .subscribe(classRoll => {
-        const classIndex = classRoll - 1;
-        charClass = CHARACTERCLASSES[classIndex];
-      });
+    this.classService.getRandomClass().pipe(take(1))
+      .subscribe(randomClass => {
+        charClass = randomClass;
+        console.log(charClass);
 
-    this.randomCharacter.class = charClass.name;
+        this.randomCharacter.class = charClass.name;
 
     // Pull in default inventory
-    this.randomCharacter.inventory = charClass.inventory;
+        this.randomCharacter.inventory = charClass.inventory;
 
     // Make inventory Selections
-    this.selectInventory(charClass.inventoryselections);
+        this.selectInventory(charClass.inventoryselections);
 
     // Select Skill Proficiencies
-    this.selectProfs(charClass.numberskills, charClass.skillproficienies, this.randomCharacter.skillproficiencies);
+        this.selectProfs(charClass.numberskills, charClass.skillproficiencies, this.randomCharacter.skillproficiencies);
 
     // Pull in features
-    this.randomCharacter.features = charClass.features;
+        this.randomCharacter.features = charClass.features;
 
     // Pull in other proficiencies
-    this.randomCharacter.toolsandlanguages = charClass.toolsandlanguages;
+        this.randomCharacter.toolsandlanguages = charClass.toolsandlanguages;
 
     // Modify attributes
-    this.modifyAttributes(charClass.abilitymodifiers);
+        this.modifyAttributes(charClass.abilitymodifiers);
 
     // Select sub class if applicable
-    this.selectSubClass(charClass.subclasses);
+        this.selectSubClass(charClass.subclasses);
 
     // Pull in saving throws
-    this.randomCharacter.savingthrows = charClass.savingthrows;
+        this.randomCharacter.savingthrows = charClass.savingthrows;
+    });
   }
 
   // Selects race from database (currently mocks) at random, and fills in necessary data.
@@ -150,7 +157,6 @@ randomCharacter: playerCharacter = {
         this.randomCharacter.features.push(charRace.features[i]);
       }
 
-        console.log(charRace);
       // Select skill proficiencies from possibilities if applicable
         this.selectProfs(charRace.numberskills, charRace.skillproficiencies, this.randomCharacter.skillproficiencies);
 

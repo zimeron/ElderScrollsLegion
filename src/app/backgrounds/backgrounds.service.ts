@@ -40,7 +40,7 @@ export class BackgroundsService {
 
   // Shows messages using Message Service
   private log(message: string) {
-    this.messageService.add(`Feature Service: ${message}`);
+    this.messageService.add(`Background Service: ${message}`);
   }
 
   // Handles errors on HTTP requests

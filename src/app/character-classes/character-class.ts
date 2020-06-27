@@ -17,7 +17,7 @@ export class characterClass {
     // Specifies how many skills are to be chosen from the following list.
     numberskills: number;
     // List of possible skill proficiencies.
-    skillproficienies: string[];
+    skillproficiencies: string[];
     toolsandlanguages: string[];
     // Strength, Agility, Endurance, Intelligence, Willpower, and Personality in that order.
     abilitymodifiers: number[];

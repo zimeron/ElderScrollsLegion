@@ -29,10 +29,10 @@ export class BirthsignService {
         ));
   }
 
-  // Grabs a randomly rolled Birthsign by ID. (5 is subject to change based on number of Races in the DB)
+  // Grabs a randomly rolled Birthsign by ID. Checks for Serpent birthsign (double D12 roll)
   getRandomBirthsign(): Observable<Birthsign> {
     let birthsignID;
-    this.diceRoller.rollArb(7).pipe(take(1))
+    this.diceRoller.rollArb(12).pipe(take(1))
       .subscribe(birthsignRoll => birthsignID = birthsignRoll);
     return this.getBirthsignById(birthsignID);
   }
